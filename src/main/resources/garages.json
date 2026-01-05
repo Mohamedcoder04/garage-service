@@ -1,0 +1,95 @@
+[
+  {
+    "name": "Garage Renault Casablanca",
+    "address": "123 Boulevard Hassan II, Casablanca, Maroc",
+    "telephone": "+212 511 22 33 44",
+    "email": "contact@renault-casa.ma",
+    "openingHours": {
+      "MONDAY": [
+        { "startTime": "08:30", "endTime": "12:30" },
+        { "startTime": "14:00", "endTime": "18:00" }
+      ],
+      "TUESDAY": [
+        { "startTime": "08:30", "endTime": "12:30" },
+        { "startTime": "14:00", "endTime": "18:00" }
+      ],
+      "WEDNESDAY": [
+        { "startTime": "08:30", "endTime": "12:30" },
+        { "startTime": "14:00", "endTime": "18:00" }
+      ],
+      "THURSDAY": [
+        { "startTime": "08:30", "endTime": "12:30" },
+        { "startTime": "14:00", "endTime": "18:00" }
+      ],
+      "FRIDAY": [
+        { "startTime": "08:30", "endTime": "12:30" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "SATURDAY": [
+        { "startTime": "09:00", "endTime": "13:00" }
+      ]
+    }
+  },
+  {
+    "name": "Garage Renault Rabat",
+    "address": "45 Avenue Mohammed V, Rabat, Maroc",
+    "telephone": "+212 522 33 44 55",
+    "email": "service@renault-rabat.ma",
+    "openingHours": {
+      "MONDAY": [
+        { "startTime": "09:00", "endTime": "12:00" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "TUESDAY": [
+        { "startTime": "09:00", "endTime": "12:00" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "WEDNESDAY": [
+        { "startTime": "09:00", "endTime": "12:00" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "THURSDAY": [
+        { "startTime": "09:00", "endTime": "12:00" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "FRIDAY": [
+        { "startTime": "09:00", "endTime": "12:00" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "SATURDAY": [
+        { "startTime": "09:00", "endTime": "13:00" }
+      ]
+    }
+  },
+  {
+    "name": "Garage Renault Marrakech",
+    "address": "Route de Safi, Marrakech, Maroc",
+    "telephone": "+212 533 44 55 66",
+    "email": "info@renault-marrakech.ma",
+    "openingHours": {
+      "MONDAY": [
+        { "startTime": "08:00", "endTime": "12:00" },
+        { "startTime": "13:30", "endTime": "18:00" }
+      ],
+      "TUESDAY": [
+        { "startTime": "08:00", "endTime": "12:00" },
+        { "startTime": "13:30", "endTime": "18:00" }
+      ],
+      "WEDNESDAY": [
+        { "startTime": "08:00", "endTime": "12:00" },
+        { "startTime": "13:30", "endTime": "18:00" }
+      ],
+      "THURSDAY": [
+        { "startTime": "08:00", "endTime": "12:00" },
+        { "startTime": "13:30", "endTime": "18:00" }
+      ],
+      "FRIDAY": [
+        { "startTime": "08:00", "endTime": "12:00" },
+        { "startTime": "14:30", "endTime": "18:00" }
+      ],
+      "SATURDAY": [
+        { "startTime": "09:00", "endTime": "13:00" }
+      ]
+    }
+  }
+]

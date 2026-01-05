@@ -1,0 +1,160 @@
+package com.renault.mobility.garage.service.impl;
+
+import com.renault.mobility.garage.domain.Garage;
+import com.renault.mobility.garage.domain.Vehicle;
+import com.renault.mobility.garage.dto.PageResponse;
+import com.renault.mobility.garage.dto.VehicleDto;
+import com.renault.mobility.garage.exception.EntityNotFoundException;
+import com.renault.mobility.garage.exception.GarageCapacityExceededException;
+import com.renault.mobility.garage.mapper.VehicleMapper;
+import com.renault.mobility.garage.repository.VehicleRepository;
+import com.renault.mobility.garage.service.IGarageService;
+import com.renault.mobility.garage.service.IVehicleService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static com.renault.mobility.garage.mapper.VehicleMapper.mapToVehicle;
+import static com.renault.mobility.garage.mapper.VehicleMapper.maptoVehicleDto;
+import static com.renault.mobility.garage.util.Constants.GARAGE_CAPACITY_EXCEEDED;
+import static com.renault.mobility.garage.util.Constants.VEHICLE_NOT_FOUND;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class VehicleServiceImpl implements IVehicleService {
+
+    private final VehicleRepository vehicleRepository;
+    private final IGarageService garageService;
+    private final StreamBridge streamBridge;
+    @Value("${garage.capacity.max}")
+    private int garageCapacity;
+
+    @Override
+    @Transactional
+    public VehicleDto addVehicleToGarage(Long garageId, VehicleDto vehicleDTO) {
+        Garage garage = garageService.findGarageEntityByIdOrThrow(garageId);
+        long countByGarageId = vehicleRepository.countByGarageId(garageId);
+        if (garageCapacity <= countByGarageId) {
+            throw new GarageCapacityExceededException(
+                    String.format(GARAGE_CAPACITY_EXCEEDED, garage.getId(), garageCapacity)
+            );
+        }
+
+        Vehicle vehicle = mapToVehicle(vehicleDTO);
+        vehicle.setGarage(garage);
+
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+        log.info("Véhicule [id={}] ajouté avec succès au garage [id={}]", savedVehicle.getId(), garageId);
+
+        VehicleDto vehicleDto = maptoVehicleDto(savedVehicle);
+
+        var result = streamBridge.send("createVehicle-out-0", vehicleDto);
+        log.info("Message envoyé sur le binding '{}' pour le véhicule ID={} - succès: {}",
+                "createVehicle-out-0", vehicleDto.id(), result);
+
+        return vehicleDto;
+    }
+
+    @Override
+    public VehicleDto getVehicleById(Long id) {
+        return maptoVehicleDto(findVehicleEntityByIdOrThrow(id));
+    }
+
+    @Override
+    @Transactional
+    public VehicleDto updateVehicle(Long id, VehicleDto vehicleDTO) {
+        Vehicle existingVehicle = findVehicleEntityByIdOrThrow(id);
+
+        if (
+                vehicleDTO.garageId() != null &&
+                        (existingVehicle.getGarage() == null || !existingVehicle.getGarage().getId().equals(vehicleDTO.garageId()))
+        ) {
+
+            Garage newGarage = garageService.findGarageEntityByIdOrThrow(vehicleDTO.garageId());
+
+            long currentCount = vehicleRepository.countByGarageId(newGarage.getId());
+            if (currentCount >= garageCapacity) {
+                throw new GarageCapacityExceededException(
+                        String.format(GARAGE_CAPACITY_EXCEEDED, newGarage.getId(), garageCapacity)
+                );
+            }
+
+            existingVehicle.setGarage(newGarage);
+            log.info("Garage du véhicule [id={}] mis à jour, nouveau garage [id={}]", id, newGarage.getId());
+        }
+
+        existingVehicle.setBrand(vehicleDTO.brand());
+        existingVehicle.setModelName(vehicleDTO.modelName());
+        existingVehicle.setAnneeFabrication(vehicleDTO.anneeFabrication());
+        existingVehicle.setTypeCarburant(vehicleDTO.typeCarburant());
+
+        Vehicle savedVehicle = vehicleRepository.save(existingVehicle);
+
+        log.info("Véhicule [id={}] mis à jour avec succès", savedVehicle.getId());
+
+        return maptoVehicleDto(savedVehicle);
+    }
+
+
+    @Override
+    public void deleteVehicle(Long id) {
+        findVehicleEntityByIdOrThrow(id);
+
+        vehicleRepository.deleteById(id);
+
+        log.info("Véhicule [id={}] supprimé avec succès", id);
+    }
+
+    @Override
+    public PageResponse<VehicleDto> getVehiclesByGarageId(int page, int size, Long garageId) {
+        int pageOneBased = Math.max(1, page);
+        Pageable pageable = PageRequest.of(pageOneBased - 1, size, Sort.by("id").descending());
+
+        Page<Vehicle> vehiclePages = vehicleRepository.findAllByGarageId(garageId, pageable);
+
+        List<VehicleDto> vehicleDtos = vehiclePages.getContent().stream()
+                .map(VehicleMapper::maptoVehicleDto).toList();
+
+        return new PageResponse<>(
+                vehicleDtos,
+                vehiclePages.getNumber(),
+                vehiclePages.getSize(),
+                vehiclePages.getTotalElements(),
+                vehiclePages.getTotalPages()
+        );
+    }
+
+    @Override
+    public PageResponse<VehicleDto> getVehiclesByModel(int page, int size, String modelName) {
+        int pageOneBased = Math.max(1, page);
+        Pageable pageable = PageRequest.of(pageOneBased - 1, size, Sort.by("id").descending());
+        Page<Vehicle> vehiclePages = vehicleRepository.findAllByModelNameIgnoreCase(modelName, pageable);
+        List<VehicleDto> vehicleDtos = vehiclePages.getContent().stream()
+                .map(VehicleMapper::maptoVehicleDto).toList();
+
+        return new PageResponse<>(
+                vehicleDtos,
+                vehiclePages.getNumber(),
+                vehiclePages.getSize(),
+                vehiclePages.getTotalElements(),
+                vehiclePages.getTotalPages()
+        );
+    }
+
+    public Vehicle findVehicleEntityByIdOrThrow(Long id) {
+        return vehicleRepository.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(String.format(VEHICLE_NOT_FOUND, id))
+                );
+    }
+}

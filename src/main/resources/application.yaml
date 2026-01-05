@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: Renault Garage Service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/garage-service
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/db.changelog-master.xml
+
+  cloud:
+    function:
+      definition: createVehicle;vehicleConsumer
+    stream:
+      bindings:
+        createVehicle-out-0:
+          destination: vehicle-topic
+          content-type: application/json
+        vehicleConsumer-in-0:
+          destination: vehicle-topic
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: localhost:9092
+garage:
+  capacity:
+    max: 50

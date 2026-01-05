@@ -1,0 +1,77 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="001-create-garage" author="maghzer">
+        <createTable tableName="garage">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_garage"/>
+            </column>
+            <column name="creation_date" type="TIMESTAMP" remarks="@CreatedDate">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="TIMESTAMP" remarks="@LastModifiedDate"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="telephone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="opening_hours" type="JSONB"/>
+        </createTable>
+
+        <createTable tableName="vehicle">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_vehicle"/>
+            </column>
+            <column name="creation_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="TIMESTAMP"/>
+            <column name="brand" type="VARCHAR(255)"/>
+            <column name="model_name" type="VARCHAR(255)"/>
+            <column name="annee_fabrication" type="INTEGER"/>
+            <column name="type_carburant" type="VARCHAR(50)"/>
+            <column name="garage_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="vehicle"
+                baseColumnNames="garage_id"
+                constraintName="fk_vehicle_garage"
+                referencedTableName="garage"
+                referencedColumnNames="id"
+                onDelete="SET NULL"/>
+
+
+        <createTable tableName="accessory">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_accessory"/>
+            </column>
+            <column name="creation_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="TIMESTAMP"/>
+            <column name="nom" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="prix" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vehicle_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="accessory"
+                baseColumnNames="vehicle_id"
+                constraintName="fk_accessory_vehicle"
+                referencedTableName="vehicle"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+    </changeSet>
+
+</databaseChangeLog>
+

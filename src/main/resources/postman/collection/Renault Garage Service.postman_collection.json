@@ -1,0 +1,580 @@
+{
+	"info": {
+		"_postman_id": "5a0082f2-017e-4f8c-a4ac-40877056dc85",
+		"name": "Renault Garage Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24537452"
+	},
+	"item": [
+		{
+			"name": "garages",
+			"item": [
+				{
+					"name": "Get garage by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/garages/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"garages",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{garageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All garages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/garages",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"garages"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "name",
+									"disabled": true
+								},
+								{
+									"key": "direction",
+									"value": "asc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update garage",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Garage Renault ...\",\r\n    \"address\": \"123 Boulevard Hassan II, ..., Maroc\",\r\n    \"telephone\": \"+212 544 55 66 77\",\r\n    \"email\": \"contact@renault-....ma\",\r\n    \"openingHours\": {\r\n      \"MONDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"TUESDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"WEDNESDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"THURSDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"FRIDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:30\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"SATURDAY\": [\r\n        { \"startTime\": \"09:00\", \"endTime\": \"13:00\" }\r\n      ]\r\n    }\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/garages/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"garages",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{garageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete garage",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/garages/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"garages",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{garageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create garage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Garage Renault Fes\",\r\n    \"address\": \"123 Boulevard Hassan II, Fes, Maroc\",\r\n    \"telephone\": \"+212 544 55 66 77\",\r\n    \"email\": \"contact@renault-fes.ma\",\r\n    \"openingHours\": {\r\n      \"MONDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"TUESDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"WEDNESDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"THURSDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:00\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"FRIDAY\": [\r\n        { \"startTime\": \"08:30\", \"endTime\": \"12:30\" },\r\n        { \"startTime\": \"14:30\", \"endTime\": \"18:00\" }\r\n      ],\r\n      \"SATURDAY\": [\r\n        { \"startTime\": \"09:00\", \"endTime\": \"13:00\" }\r\n      ]\r\n    }\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/garages",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"garages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search garages",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": {{vehicleType}},\r\n  \"accessoryCode\": {{accessoryCode}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/garages/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"garages",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vehicles",
+			"item": [
+				{
+					"name": "Get vehicle by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vehicles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{vehicleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"brand\": \"Renault\",\r\n  \"modelName\": \"Clio\",\r\n  \"anneeFabrication\": 2020,\r\n  \"typeCarburant\": \"DIESEL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/vehicles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{vehicleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get vehicles by garage ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vehicles/garages/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles",
+								"garages",
+								":id"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{garageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete vehicle by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vehicles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{vehicleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add vehicle to garage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"brand\": \"Renault\",\r\n  \"modelName\": \"Clio\",\r\n  \"anneeFabrication\": 2020,\r\n  \"typeCarburant\": \"DIESEL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/vehicles/garages/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles",
+								"garages",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{garageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get vehicle by modelName",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vehicles/model/:vehicleModelName",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles",
+								"model",
+								":vehicleModelName"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "vehicleModelName",
+									"value": "{{vehicleModelName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "accessories",
+			"item": [
+				{
+					"name": "Get accessory by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/accessories/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accessories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{accessoryId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all accessories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/accessories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accessories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add accessory to vehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nom\": \"Caméra de recul\",\r\n  \"description\": \"Caméra HD avec lignes de guidage dynamiques\",\r\n  \"prix\": 1499.9,\r\n  \"type\": \"SAFETY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accessories/vehicles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accessories",
+								"vehicles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{vehicleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update accessory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nom\": \"Caméra de recul test\",\r\n  \"description\": \"Caméra HD avec lignes de guidage dynamiques test\",\r\n  \"prix\": 1499.9,\r\n  \"type\": \"SAFETY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accessories/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accessories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{accessoryId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete accessory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/accessories/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accessories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{accessoryId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get accessories by vehicle ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/accessories/vehicles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accessories",
+								"vehicles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{vehicleId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
